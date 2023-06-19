@@ -45,9 +45,6 @@ class TransactionController extends AbstractController
         }
 
         $transactions = $query->getQuery()->getResult();
-//        $tradesman = $this->entityManager
-//                        ->getRepository(Tradesman::class)
-//                        ->find($tradesmanId);
         return $this->render('transaction/index.html.twig', [
             'transactions' => $transactions,
         ]);
