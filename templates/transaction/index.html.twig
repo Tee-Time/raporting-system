@@ -10,12 +10,36 @@
 <div class="container">
     <h1>Transaction index</h1>
     {# Add search form #}
-    <form action="{{ path('app_transaction_index') }}" method="GET">
-        <div class="input-group mb-3">
-            <input type="text" name="search" class="form-control-m" placeholder="Search...">
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Search</button>
+    <form action="{{ path('app_transaction_index') }}" method="get">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="search">Search:</label>
+                    <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}">
+                </div>
             </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="start_datetime">Start Datetime:</label>
+                    <input type="datetime-local" class="form-control" id="start_datetime" name="start_datetime" value="{{ app.request.query.get('start_datetime') }}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="end_datetime">End Datetime:</label>
+                    <input type="datetime-local" class="form-control" id="end_datetime" name="end_datetime" value="{{ app.request.query.get('end_datetime') }}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            <!-- Download Button -->
+{#            <div class="form-group">#}
+{#                <a href="{{ path('api_download_tradesman_data_weekly', {'id': tradesman.id, 'week': '2023-06-18'}) }}" class="btn btn-primary">Download Data</a>#}
+{#            </div>#}
         </div>
     </form>
     <table class="table">

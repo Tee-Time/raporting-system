@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tradesman;
 use App\Entity\Transaction;
 use App\Form\TransactionType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,8 +24,9 @@ class TransactionController extends AbstractController
     public function index(Request $request): Response
     {
         $search = $request->query->get('search');
+        $startDateTime = $request->query->get('start_datetime');
+        $endDateTime = $request->query->get('end_datetime');
 
-        // Perform the search query based on the provided search criteria
         $query = $this->entityManager
             ->getRepository(Transaction::class)
             ->createQueryBuilder('t')
@@ -33,13 +35,19 @@ class TransactionController extends AbstractController
         if ($search) {
             $query->andWhere('t.amount LIKE :search OR t.date LIKE :search OR tr.name LIKE :search')
                 ->setParameter('search', '%' . $search . '%');
-
         }
 
-        $result = $query->getQuery()->getResult();
+        if ($startDateTime && $endDateTime) {
+            $query->andWhere('t.date >= :startDateTime')
+                ->andWhere('t.date <= :endDateTime')
+                ->setParameter('startDateTime', $startDateTime)
+                ->setParameter('endDateTime', $endDateTime);
+        }
 
         $transactions = $query->getQuery()->getResult();
-
+//        $tradesman = $this->entityManager
+//                        ->getRepository(Tradesman::class)
+//                        ->find($tradesmanId);
         return $this->render('transaction/index.html.twig', [
             'transactions' => $transactions,
         ]);
