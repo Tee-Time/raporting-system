@@ -1,26 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Transaction index{% endblock %}
+
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}">
+    {{ encore_entry_link_tags('app') }}
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.js') }}"></script>
-{% endblock %}
 {% block body %}
+<div class="container">
     <h1>Transaction index</h1>
-
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for transaction in transactions %}
@@ -29,17 +25,24 @@
                 <td>{{ transaction.amount }}</td>
                 <td>{{ transaction.date ? transaction.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_transaction_show', {'id': transaction.id}) }}">show</a>
-                    <a href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">edit</a>
+                    <a href="{{ path('app_transaction_show', {'id': transaction.id}) }}" class="btn btn-primary">Show</a>
+                    <a href="{{ path('app_transaction_edit', {'id': transaction.id}) }}" class="btn btn-secondary">Edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_transaction_new') }}">Create new</a>
+    <a href="{{ path('app_transaction_new') }}" class="btn btn-success">Create new</a>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.js') }}"></script>
 {% endblock %}
