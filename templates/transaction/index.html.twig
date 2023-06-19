@@ -1,7 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Transaction index{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}">
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.js') }}"></script>
+{% endblock %}
 {% block body %}
     <h1>Transaction index</h1>
 
