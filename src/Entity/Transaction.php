@@ -30,6 +30,8 @@ class Transaction
 
     /**
      * @ORM\Column(type="datetime")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Date")
+     * @ORM\JoinColumn(name="date_id", referencedColumnName="id")
      */
     private $date;
 
