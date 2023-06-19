@@ -3,6 +3,7 @@
 {% block title %}Tradesman index{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Tradesman index</h1>
 
     <table class="table">
@@ -19,8 +20,8 @@
                 <td>{{ tradesman.id }}</td>
                 <td>{{ tradesman.name }}</td>
                 <td>
-                    <a href="{{ path('app_tradesman_show', {'id': tradesman.id}) }}">show</a>
-                    <a href="{{ path('app_tradesman_edit', {'id': tradesman.id}) }}">edit</a>
+                    <a href="{{ path('app_tradesman_show', {'id': tradesman.id}) }}" class="btn btn-primary">show</a>
+                    <a href="{{ path('app_tradesman_edit', {'id': tradesman.id}) }}" class="btn btn-secondary">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +32,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_tradesman_new') }}">Create new</a>
+    <a href="{{ path('app_tradesman_new') }}" class="btn btn-success">Create new</a>
+</div>
 {% endblock %}

@@ -15,6 +15,7 @@
             <th>Id</th>
             <th>Amount</th>
             <th>Date</th>
+            <th>Tradesman</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -24,6 +25,7 @@
                 <td>{{ transaction.id }}</td>
                 <td>{{ transaction.amount }}</td>
                 <td>{{ transaction.date ? transaction.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ transaction.tradesman ? transaction.tradesman : '' }}</td>
                 <td>
                     <a href="{{ path('app_transaction_show', {'id': transaction.id}) }}" class="btn btn-primary">Show</a>
                     <a href="{{ path('app_transaction_edit', {'id': transaction.id}) }}" class="btn btn-secondary">Edit</a>

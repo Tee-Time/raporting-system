@@ -3,9 +3,11 @@
 {% block title %}New Tradesman{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Create new Tradesman</h1>
 
     {{ include('tradesman/_form.html.twig') }}
 
-    <a href="{{ path('app_tradesman_index') }}">back to list</a>
+    <a href="{{ path('app_tradesman_index') }}" class="btn btn-primary">back to list</a>
+</div>
 {% endblock %}
