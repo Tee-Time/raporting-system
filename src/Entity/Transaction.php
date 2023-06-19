@@ -29,7 +29,7 @@ class Transaction
     private $tradesman;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $date;
 

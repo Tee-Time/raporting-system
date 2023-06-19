@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ transaction.id }}</td>
                 <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.date ? transaction.date|date('Y-m-d') : '' }}</td>
+                <td>{{ transaction.date ? transaction.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_transaction_show', {'id': transaction.id}) }}">show</a>
                     <a href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">edit</a>

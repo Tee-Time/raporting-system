@@ -17,7 +17,7 @@
         {% for date in dates %}
             <tr>
                 <td>{{ date.id }}</td>
-                <td>{{ date.date ? date.date|date('Y-m-d') : '' }}</td>
+                <td>{{ date.date ? date.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_date_show', {'id': date.id}) }}">show</a>
                     <a href="{{ path('app_date_edit', {'id': date.id}) }}">edit</a>
