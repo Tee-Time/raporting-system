@@ -9,6 +9,15 @@
 {% block body %}
 <div class="container">
     <h1>Transaction index</h1>
+    {# Add search form #}
+    <form action="{{ path('app_transaction_index') }}" method="GET">
+        <div class="input-group mb-3">
+            <input type="text" name="search" class="form-control-m" placeholder="Search...">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
     <table class="table">
         <thead>
         <tr>

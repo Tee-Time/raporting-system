@@ -9,18 +9,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Tradesman;
-use App\Entity\Date;
 
 #[Route('/transaction')]
 class TransactionController extends AbstractController
 {
-    #[Route('/', name: 'app_transaction_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    private EntityManagerInterface $entityManager;
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $transactions = $entityManager
+        $this->entityManager = $entityManager;
+    }
+
+    #[Route('/', name: 'app_transaction_index', methods: ['GET'])]
+    public function index(Request $request): Response
+    {
+        $search = $request->query->get('search');
+
+        // Perform the search query based on the provided search criteria
+        $query = $this->entityManager
             ->getRepository(Transaction::class)
-            ->findAll();
+            ->createQueryBuilder('t')
+            ->leftJoin('t.tradesman', 'tr');
+
+        if ($search) {
+            $query->andWhere('t.amount LIKE :search OR t.date LIKE :search OR tr.name LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+
+        }
+
+        $result = $query->getQuery()->getResult();
+
+        $transactions = $query->getQuery()->getResult();
 
         return $this->render('transaction/index.html.twig', [
             'transactions' => $transactions,
