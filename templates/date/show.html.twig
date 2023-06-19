@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Date{% endblock %}
+
+{% block body %}
+    <h1>Date</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ date.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ date.date ? date.date|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_date_index') }}">back to list</a>
+
+    <a href="{{ path('app_date_edit', {'id': date.id}) }}">edit</a>
+
+    {{ include('date/_delete_form.html.twig') }}
+{% endblock %}

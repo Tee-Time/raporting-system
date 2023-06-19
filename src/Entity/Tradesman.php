@@ -22,5 +22,32 @@ class Tradesman
      */
     private $name;
 
-    // Add getters and setters for the properties
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
 }

@@ -23,3 +23,5 @@
 .idea/phpunit.xml
 .idea/raporting-system.iml
 .idea/vcs.xml
+.idea/codeception.xml
+.idea/phpspec.xml

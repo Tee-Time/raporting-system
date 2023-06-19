@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tradesman{% endblock %}
+
+{% block body %}
+    <h1>Tradesman</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tradesman.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ tradesman.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tradesman_index') }}">back to list</a>
+
+    <a href="{{ path('app_tradesman_edit', {'id': tradesman.id}) }}">edit</a>
+
+    {{ include('tradesman/_delete_form.html.twig') }}
+{% endblock %}
