@@ -33,7 +33,7 @@
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
                 <div class="form-group">
-                    <a href="{{ path('api_download_data', {'search': app.request.query.get('search'), 'start_datetime': app.request.query.get('start_datetime'), 'end_datetime': app.request.query.get('end_datetime')}) }}" class="btn btn-secondary" style="margin-left: 5px;">Download</a>
+                    <a href="{{ path('api_download_data', {'search': app.request.query.get('search'), 'start_datetime': app.request.query.get('start_datetime'), 'end_datetime': app.request.query.get('end_datetime')}) }}" class="btn btn-warning" style="margin-left: 5px;">Download</a>
                 </div>
             </div>
 

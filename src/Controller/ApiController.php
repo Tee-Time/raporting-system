@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class APIController extends AbstractController
+class ApiController extends AbstractController
 {
     #[Route('/api/data/download', name: 'api_download_data', methods: ['GET'])]
     public function downloadData(
