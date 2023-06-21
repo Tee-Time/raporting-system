@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Tradesman;
 use App\Entity\Transaction;
 use App\Form\TransactionType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,15 +32,18 @@ class TransactionController extends AbstractController
             ->leftJoin('t.tradesman', 'tr');
 
         if ($search) {
-            $query->andWhere('t.amount LIKE :search OR t.date LIKE :search OR tr.name LIKE :search')
+            $query->andWhere('t.amount LIKE :search OR tr.name LIKE :search')
                 ->setParameter('search', '%' . $search . '%');
         }
 
-        if ($startDateTime && $endDateTime) {
-            $query->andWhere('t.date >= :startDateTime')
-                ->andWhere('t.date <= :endDateTime')
-                ->setParameter('startDateTime', $startDateTime)
-                ->setParameter('endDateTime', $endDateTime);
+        if ($startDateTime) {
+            $query->andWhere('t.date >= :startDate')
+                ->setParameter('startDate', $startDateTime);
+        }
+
+        if ($endDateTime) {
+            $query->andWhere('t.date <= :endDate')
+                ->setParameter('endDate', $endDateTime);
         }
 
         $transactions = $query->getQuery()->getResult();

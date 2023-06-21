@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Transaction;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Tradesman;
@@ -36,27 +37,28 @@ class ApiController extends AbstractController
 
     private function getDataForFilters(?string $search, ?string $startDate, ?string $endDate, EntityManagerInterface $entityManager): array
     {
-        $queryBuilder = $entityManager->createQueryBuilder()
-            ->select('t')
-            ->from('App\Entity\Transaction', 't');
+        $query = $entityManager
+            ->getRepository(Transaction::class)
+            ->createQueryBuilder('t')
+            ->leftJoin('t.tradesman', 'tr');
 
         if ($search) {
-            $queryBuilder->andWhere('t.amount LIKE :search OR t.date LIKE :search OR t.tradesman.name LIKE :search')
+            $query->andWhere('t.amount LIKE :search OR tr.name LIKE :search')
                 ->setParameter('search', '%' . $search . '%');
         }
 
         if ($startDate) {
-            $queryBuilder->andWhere('t.date >= :startDate')
+            $query->andWhere('t.date >= :startDate')
                 ->setParameter('startDate', $startDate);
         }
 
         if ($endDate) {
-            $queryBuilder->andWhere('t.date <= :endDate')
+            $query->andWhere('t.date <= :endDate')
                 ->setParameter('endDate', $endDate);
         }
 
-        $query = $queryBuilder->getQuery();
-        $results = $query->getResult();
+        $queryResult = $query->getQuery();
+        $results = $queryResult->getResult();
         $data = [];
         foreach ($results as $key => $result) {
             $data[$key]['amount'] = $result->getAmount();
