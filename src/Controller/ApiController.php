@@ -35,6 +35,16 @@ class ApiController extends AbstractController
         return $response;
     }
 
+    private function getFormattedDataFromQuery(array $results) : array {
+        $data = [];
+        foreach ($results as $key => $result) {
+            $data[$key]['amount'] = $result->getAmount();
+            $data[$key]['tradesman'] = $result->getTradesman()->getName();
+            $data[$key]['date'] = $result->getDate()->format('Y-m-d H:i:s');
+        }
+        return $data;
+    }
+
     private function getDataForFilters(?string $search, ?string $startDate, ?string $endDate, EntityManagerInterface $entityManager): array
     {
         $query = $entityManager
@@ -59,17 +69,8 @@ class ApiController extends AbstractController
 
         $queryResult = $query->getQuery();
         $results = $queryResult->getResult();
-        $data = [];
-        foreach ($results as $key => $result) {
-            $data[$key]['amount'] = $result->getAmount();
-            $data[$key]['tradesman'] = $result->getTradesman()->getName();
-            $data[$key]['date'] = $result->getDate()->format('Y-m-d H:i:s');
-        }
-
-        return $data;
+        return $this->getFormattedDataFromQuery($results);
     }
-
-
 
     #[Route('/api/tradesman/{id}/data/{week}/download', name: 'api_download_tradesman_data_weekly', methods: ['GET'])]
 
@@ -81,7 +82,6 @@ class ApiController extends AbstractController
     {
         // Fetch the data for the specified tradesman and week
         $data = $this->getDataForTradesmanAndWeek($tradesman, $week, $entityManager);
-
         // Generate the CSV content
         $csvContent = $this->generateCSVContent($data);
 
@@ -103,19 +103,13 @@ class ApiController extends AbstractController
             ->getQuery();
 
         $results = $query->getResult();
-        $data = [];
-        foreach ($results as $key => $result) {
-            $data[$key]['amount'] = $result->getAmount();
-            $data[$key]['amount'] = $result->getTradesman()->getName();
-            $data[$key]['amount'] = $result->getDate()->format('Y-m-d H:i:s');
-        }
-    return $data;
+        return $this->getFormattedDataFromQuery($results);
     }
 
     private function generateCSVContent(array $data): string
     {
         // Create a CSV string from the data array
-        $csvContent = '';
+        $csvContent = 'Id,Tradesman Name,Date'. "\n";
         foreach ($data as $row) {
             $csvContent .= implode(',', $row) . "\n";
         }
